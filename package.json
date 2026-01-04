@@ -17,5 +17,10 @@
     "url": "https://github.com/Ayush9545/Digital_Money/issues"
   },
   "homepage": "https://github.com/Ayush9545/Digital_Money#readme",
-  "description": ""
+  "description": "## 🚀 Overview A backend banking architecture built with **Node.js** and **PostgreSQL**. This project implements **ACID-compliant transactions** to ensure data integrity during fund transfers.",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "pg": "^8.16.3"
+  }
 }
