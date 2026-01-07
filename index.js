@@ -41,7 +41,25 @@ app.get("/balance/:user_id", async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({message: "Server Error"})
+        res.status(500).json({ message: "Server Error" })
+    }
+})
+
+app.get("/transactions/:acc_no", async (req, res) => {
+    const acc_no = req.params.acc_no;
+
+    try {
+        const tran = await db.query(
+            "SELECT * FROM transactions WHERE sender_wallet_id =$1 OR receiver_wallet_id =$1 ORDER BY timestamp DESC",
+            [acc_no]
+        );
+        res.json({
+            account_id: acc_no,
+            history: tran.rows
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" })
     }
 })
 
