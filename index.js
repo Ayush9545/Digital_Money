@@ -1,5 +1,6 @@
 import express from "express";
-import banking from "./routes/banking.js"
+import banking from "./routes/banking.js";
+import auth from "./routes/auth.js";
 
 const app = express();
 const port = 3000;
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
     console.log("This is home page.")
 })
 
+app.use("/auth", auth);
 app.use("/api", banking);
 
 app.listen(port, () => {
