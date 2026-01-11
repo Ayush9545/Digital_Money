@@ -1,10 +1,10 @@
 import express from "express";
 import db from "../db.js";
-import authenticateToken from "./middleware/authMiddleware.js"
+import authToken from "./middleware/authMiddleware.js"
 
 const router = express.Router();
 
-router.get("/balance/:user_id", authenticateToken, async (req, res) => {
+router.get("/balance/:user_id", authToken, async (req, res) => {
     const user_id = req.params.user_id;
 
     try {
@@ -25,7 +25,7 @@ router.get("/balance/:user_id", authenticateToken, async (req, res) => {
     }
 })
 
-router.get("/transactions/:acc_no", authenticateToken, async (req, res) => {
+router.get("/transactions/:acc_no", authToken, async (req, res) => {
     const acc_no = req.params.acc_no;
 
     try {
@@ -43,7 +43,7 @@ router.get("/transactions/:acc_no", authenticateToken, async (req, res) => {
     }
 })
 
-router.post("/transfer", authenticateToken, async (req, res) => {
+router.post("/transfer", authToken, async (req, res) => {
     const sender_id = req.body.sender_id;
     const receiver_id = req.body.receiver_id;
     const amount = req.body.amount;
