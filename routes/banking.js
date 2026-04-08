@@ -4,6 +4,13 @@ import authToken from "../middleware/authMiddleware.js"
 
 const router = express.Router();
 
+router.get("/me", authToken, (req, res) => {
+    res.json({
+        message: "User profile",
+        user: req.user
+    });
+});
+
 router.get("/balance", authToken, async (req, res) => {
     const user_id = req.user.id;
 
@@ -25,26 +32,39 @@ router.get("/balance", authToken, async (req, res) => {
     }
 })
 
-router.get("/transactions/:acc_no", authToken, async (req, res) => {
-    const acc_no = req.params.acc_no;
+router.get("/transactions", authToken, async (req, res) => {
+    const user_id = req.user.id;
 
     try {
+        const wallet = await db.query(
+            "SELECT acc_no FROM wallets WHERE user_id = $1",
+            [user_id]
+        );
+
+        if (wallet.rows.length === 0) {
+            return res.status(404).json({ message: "Wallet not found" });
+        }
+
+        const acc_no = wallet.rows[0].acc_no;
+
         const tran = await db.query(
-            "SELECT * FROM transactions WHERE sender_wallet_id =$1 OR receiver_wallet_id =$1 ORDER BY timestamp DESC",
+            "SELECT * FROM transactions WHERE sender_wallet_id = $1 OR receiver_wallet_id = $1 ORDER BY timestamp DESC",
             [acc_no]
         );
+
         res.json({
             account_id: acc_no,
             history: tran.rows
         });
+
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Server Error" })
+        res.status(500).json({ message: "Server Error" });
     }
-})
+});
 
 router.post("/transfer", authToken, async (req, res) => {
-    const sender_id = req.body.sender_id;
+    const sender_id = req.user.id;
     const receiver_id = req.body.receiver_id;
     const amount = req.body.amount;
     const client = await db.connect();
