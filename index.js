@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import banking from "./routes/banking.js";
 import auth from "./routes/auth.js";

@@ -4,8 +4,8 @@ import authToken from "../middleware/authMiddleware.js"
 
 const router = express.Router();
 
-router.get("/balance/:user_id", authToken, async (req, res) => {
-    const user_id = req.params.user_id;
+router.get("/balance", authToken, async (req, res) => {
+    const user_id = req.user.id;
 
     try {
         const result = await db.query(
