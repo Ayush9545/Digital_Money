@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -8,7 +10,47 @@ function Login() {
     <div>
       <h1>Login</h1>
 
-      <form>
+      <form
+      onSubmit={async(e) => {
+        e.preventDefault();
+
+        alert("Button clicked!");
+
+        try {
+
+          const response = await axios.post(
+      
+            "http://localhost:3000/auth/login",
+      
+            {
+      
+              email,
+      
+              password,
+      
+            }
+      
+          );
+          console.log("SUCCESS:", response.data);
+
+alert(response.data.message);
+          // alert("Login Success");
+          // console.log(response.data);
+      
+        } catch (error) {
+
+          console.log("FULL ERROR:", error);
+        
+          console.log("RESPONSE:", error.response);
+        
+          console.log("MESSAGE:", error.message);
+        
+          alert("Login Failed");
+        
+        }
+    
+      }}
+      >
         <div>
           <label>Email</label>
           <br />
