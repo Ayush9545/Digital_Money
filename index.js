@@ -4,9 +4,12 @@ dotenv.config();
 import express from "express";
 import banking from "./routes/banking.js";
 import auth from "./routes/auth.js";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 app.use(express.json());
 
