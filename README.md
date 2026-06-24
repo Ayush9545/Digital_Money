@@ -14,5 +14,5 @@ This project implements **ACID-compliant transactions** to ensure data integrity
 * [x] Database Schema Design (Users, Wallets, Transactions)
 * [x] User Authentication
 * [x] Atomic Fund Transfer (ACID)
-* [ ] Concurrency Handling
+* [x] Concurrency Handling
 * [ ] Proper UI
