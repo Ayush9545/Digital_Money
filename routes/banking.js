@@ -53,7 +53,7 @@ router.get("/transactions", authToken, async (req, res) => {
         );
 
         res.json({
-            account_id: acc_no,
+            myAccount: acc_no,
             history: tran.rows
         });
 
