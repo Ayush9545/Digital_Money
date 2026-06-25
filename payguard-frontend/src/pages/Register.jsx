@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,6 +20,7 @@ function Register() {
       );
 
       alert(response.data.message);
+      navigate("/Login");
 
     } catch (error) {
       console.log(error);
