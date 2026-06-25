@@ -6,6 +6,7 @@ function Dashboard() {
   const [transactions, setTransactions] = useState([]);
   const [receiverId, setReceiverId] = useState("");
   const [amount, setAmount] = useState("");
+  const [myAccount, setMyAccount] = useState(null);
 
   useEffect(() => {
     fetchBalance();
@@ -72,6 +73,7 @@ function Dashboard() {
       console.log(response.data);
 
       setTransactions(response.data.history);
+      setMyAccount(Number(response.data.myAccount));
     } catch (error) {
       console.log(error);
     }
@@ -114,9 +116,30 @@ function Dashboard() {
         <p>No transactions yet.</p>
       ) : (
         <ul>
-          {transactions.map((transaction) => (
-            <li key={transaction.transaction_id}>₹{transaction.amount}</li>
-          ))}
+          {transactions.map((transaction) => {
+            console.log("My Account:", myAccount);
+            console.log("Transaction:", transaction);
+
+            const isSent = transaction.sender_wallet_id === myAccount;
+            return (
+              <li key={transaction.id}>
+                <h4>
+                  {isSent ? "⬇️ Sent" : "⬆️ Received"} ₹{transaction.amount}
+                </h4>
+                <p>
+                  {isSent
+                    ? `To Account ${transaction.receiver_wallet_id}`
+                    : `From Account ${transaction.sender_wallet_id}`}
+                </p>
+                <small>
+                  {new Date(transaction.timestamp).toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </small>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
