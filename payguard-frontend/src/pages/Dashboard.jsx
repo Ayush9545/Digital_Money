@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [receiverId, setReceiverId] = useState("");
@@ -79,6 +81,13 @@ function Dashboard() {
     }
   }
 
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+
+    navigate("/");
+  }
+
   return (
     <div>
       <h1>PayGuard</h1>
@@ -142,6 +151,7 @@ function Dashboard() {
           })}
         </ul>
       )}
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
