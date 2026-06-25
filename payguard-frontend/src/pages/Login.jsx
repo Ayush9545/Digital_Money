@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,45 +12,40 @@ function Login() {
       <h1>Login</h1>
 
       <form
-      onSubmit={async(e) => {
-        e.preventDefault();
+        onSubmit={async (e) => {
+          e.preventDefault();
 
-        alert("Button clicked!");
+          alert("Button clicked!");
 
-        try {
+          try {
+            const response = await axios.post(
+              "http://localhost:3000/auth/login",
+              {
+                email,
+                password,
+              }
+            );
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("user_id", response.data.user_id);
 
-          const response = await axios.post(
-      
-            "http://localhost:3000/auth/login",
-      
-            {
-      
-              email,
-      
-              password,
-      
-            }
-      
-          );
-          console.log("SUCCESS:", response.data);
+            // To get the token and user_id in the consol ------------>
+            // console.log(localStorage.getItem("token"));
+            // console.log(localStorage.getItem("user_id"));
 
-alert(response.data.message);
-          // alert("Login Success");
-          // console.log(response.data);
-      
-        } catch (error) {
+            console.log("SUCCESS:", response.data.user_id);
 
-          console.log("FULL ERROR:", error);
-        
-          console.log("RESPONSE:", error.response);
-        
-          console.log("MESSAGE:", error.message);
-        
-          alert("Login Failed");
-        
-        }
-    
-      }}
+            alert(response.data.message);
+            navigate("/dashboard");
+
+          } catch (error) {
+            
+            console.log("FULL ERROR:", error);
+            console.log("RESPONSE:", error.response);
+            console.log("MESSAGE:", error.message);
+
+            alert("Login Failed");
+          }
+        }}
       >
         <div>
           <label>Email</label>
@@ -75,9 +71,7 @@ alert(response.data.message);
 
         <br />
 
-        <button type="submit">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
