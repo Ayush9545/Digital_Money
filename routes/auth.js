@@ -69,6 +69,13 @@ router.post("/registration", async (req, res) => {
                 "INSERT INTO users (email, password_hash) VALUES ($1,$2) RETURNING *",
                 [email, hash_password]
             );
+            const user_id = result.rows[0].user_id;
+            
+            await db.query(
+                "INSERT INTO wallets (user_id, balance) VALUES ($1, $2)",
+                [user_id, 0]
+            );
+            
             res.json({ message: "Resgister successfully!" });
         }
     } catch (error) {
