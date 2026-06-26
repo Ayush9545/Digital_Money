@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Dashboard.css";
+import Logo from "../components/Logo";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -89,69 +91,80 @@ function Dashboard() {
   }
 
   return (
-    <div>
-      <h1>PayGuard</h1>
-      <h2>Current Balance</h2>
-      <h1>₹{balance}</h1>
-      <h2>Transfer Money</h2>
-
-      <div>
-        <label>Receiver User ID</label>
-        <br />
-        <input
-          type="number"
-          value={receiverId}
-          onChange={(e) => setReceiverId(e.target.value)}
-        />
+    <div className="dashboard">
+      {/* <Logo /> */}
+      <div className="navbar">
+        <h1>PayGuard</h1>
+        <button onClick={handleLogout}>Logout</button>
       </div>
 
-      <br />
-
-      <div>
-        <label>Amount</label>
-        <br />
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
+      <div className="balance-card">
+        <h2>Current Balance</h2>
+        <h1>₹{Number(balance).toLocaleString("en-IN")}</h1>
+        <p>Account No. {myAccount}</p>
+        <p>User ID : {localStorage.getItem("user_id")}</p>
       </div>
 
-      <br />
-      <button onClick={handleTransfer}>Send Money</button>
+      <div className="transfer-card">
+        <h2>Transfer Money</h2>
 
-      <h2>Recent Transactions</h2>
-      {transactions.length === 0 ? (
-        <p>No transactions yet.</p>
-      ) : (
-        <ul>
-          {transactions.map((transaction) => {
-            console.log("My Account:", myAccount);
-            console.log("Transaction:", transaction);
+        <div>
+          <label>Recipient ID</label>
+          <br />
+          <input
+            type="number"
+            value={receiverId}
+            onChange={(e) => setReceiverId(e.target.value)}
+          />
+        </div>
 
-            const isSent = transaction.sender_wallet_id === myAccount;
-            return (
-              <li key={transaction.id}>
-                <h4>
-                  {isSent ? "⬇️ Sent" : "⬆️ Received"} ₹{transaction.amount}
-                </h4>
-                <p>
-                  {isSent
-                    ? `To Account ${transaction.receiver_wallet_id}`
-                    : `From Account ${transaction.sender_wallet_id}`}
-                </p>
-                <small>
-                  {new Date(transaction.timestamp).toLocaleString("en-IN", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  })}
-                </small>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-      <button onClick={handleLogout}>Logout</button>
+        <div>
+          <label>Amount</label>
+          <br />
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
+
+        <button onClick={handleTransfer}>Send Money</button>
+      </div>
+
+      <div className="transaction-card">
+        <h2>Recent Transactions</h2>
+
+        {transactions.length === 0 ? (
+          <p>No transactions yet.</p>
+        ) : (
+          <ul>
+            {transactions.map((transaction) => {
+              console.log("My Account:", myAccount);
+              console.log("Transaction:", transaction);
+
+              const isSent = transaction.sender_wallet_id === myAccount;
+              return (
+                <li key={transaction.id}>
+                  <h4>
+                    {isSent ? "⬇️ Sent" : "⬆️ Received"} ₹{transaction.amount}
+                  </h4>
+                  <p>
+                    {isSent
+                      ? `To Account ${transaction.receiver_wallet_id}`
+                      : `From Account ${transaction.sender_wallet_id}`}
+                  </p>
+                  <small>
+                    {new Date(transaction.timestamp).toLocaleString("en-IN", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </small>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

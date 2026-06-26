@@ -1,0 +1,140 @@
+.dashboard {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.navbar h1{
+    color:white;
+}
+
+.balance-card {
+    background: #1e293b;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.transfer-card {
+    background: #1e293b;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.transaction-card {
+    background: #1e293b;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:18px;
+    border:none;
+    border-radius:8px;
+    background:#334155;
+    color:white;
+    outline:none;
+    font-size:16px;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+ul{
+    list-style:none;
+    padding:0;
+}
+
+li{
+    background:#334155;
+    padding:18px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+label{
+    color:#cbd5e1;
+}
+
+small{
+    color:#94a3b8;
+}
+
+.balance-card {
+    text-align: center;
+}
+
+.balance-card h2 {
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.balance-card h1 {
+    font-size: 48px;
+    color: #22c55e;
+}
+
+.transfer-card input {
+    margin-top: 8px;
+    margin-bottom: 18px;
+}
+
+.transfer-card label {
+    font-weight: bold;
+}
+
+.transaction-card li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.transaction-card h4 {
+    margin-bottom: 8px;
+}
+
+.transaction-card p {
+    margin-bottom: 6px;
+}
+
+.transaction-card li:hover {
+    transform: translateY(-3px);
+    transition: 0.3s;
+}
+
+button {
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.transfer-card button{
+    width:100%;
+    margin-top:15px;
+}
